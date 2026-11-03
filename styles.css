@@ -882,3 +882,230 @@ footer {
 .hide {
   display: none !important;
 }
+
+/* ========================================================
+   MOBILE & TABLET RESPONSIVE PERFECTION
+   ======================================================== */
+
+@media (max-width: 768px) {
+  html {
+    scroll-padding-top: 70px;
+  }
+  
+  .wrap {
+    width: min(100% - 30px, 1180px);
+  }
+
+  /* Top bar */
+  .top .wrap {
+    flex-direction: column;
+    gap: 6px;
+    text-align: center;
+    padding-block: 6px;
+  }
+  .live span {
+    font-size: 0.75rem;
+  }
+  .pill {
+    padding: 3px 10px;
+    font-size: 0.72rem;
+  }
+
+  /* Header */
+  .hdr {
+    top: 0;
+    padding-block: 10px;
+  }
+  .hdr .wrap {
+    padding-block: 0;
+  }
+  .mark b {
+    font-size: 1.3rem;
+  }
+  .mark small {
+    font-size: 0.62rem;
+  }
+  .acts {
+    gap: 8px;
+  }
+  .acts .btn:not(.gold) {
+    display: none; /* Keep header clean: only prominent VIP button */
+  }
+  .acts .btn.gold {
+    padding: 8px 14px;
+    font-size: 0.8rem;
+  }
+
+  /* Hero */
+  .hero {
+    min-height: auto;
+    padding-block: 40px 30px;
+  }
+  .hero .wrap {
+    padding-block: 30px 20px;
+  }
+  .hero h1 {
+    font-size: 1.85rem;
+    line-height: 1.25;
+    margin-bottom: 14px;
+  }
+  .hero p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 24px;
+  }
+  .cta {
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    margin-bottom: 28px;
+  }
+  .cta .btn {
+    width: 100%;
+    padding: 14px;
+    text-align: center;
+    font-size: 0.95rem;
+  }
+
+  /* 2x2 Feature Bar */
+  .features-bar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding-top: 18px;
+  }
+  .feature-item {
+    font-size: 0.78rem;
+  }
+
+  /* Sections */
+  section {
+    padding-block: 50px;
+  }
+  .sh {
+    margin-bottom: 24px;
+  }
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  /* Horizontal swipeable tabs */
+  .tabs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .tabs::-webkit-scrollbar {
+    display: none;
+  }
+  .tab {
+    flex-shrink: 0;
+    padding: 7px 15px;
+    font-size: 0.8rem;
+  }
+
+  /* Menu single column / touch optimized */
+  .menu {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .item .ph {
+    height: 190px;
+  }
+  .item .bd {
+    padding: 16px;
+  }
+  .item h3 {
+    font-size: 1.1rem;
+  }
+  .item .pr {
+    font-size: 1.2rem;
+  }
+  .item .btn.sm {
+    padding: 9px 16px;
+    font-size: 0.85rem;
+  }
+
+  /* Zones */
+  .zones {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .zone-img-wrap {
+    height: 180px;
+  }
+  .zone-body {
+    padding: 18px;
+  }
+
+  /* How It Works */
+  .steps {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+  .step-num {
+    font-size: 1.8rem;
+  }
+
+  /* Reputation Stand */
+  .rep {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .stand {
+    padding: 22px 16px;
+  }
+  .stars {
+    gap: 12px;
+  }
+  .star {
+    font-size: 2.4rem;
+    padding: 6px;
+  }
+
+  /* Footer */
+  footer {
+    padding-block: 40px 20px;
+  }
+  .fg {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  /* Floating Cart on mobile */
+  .cart {
+    left: 15px;
+    right: 15px;
+    bottom: max(15px, env(safe-area-inset-bottom));
+  }
+  .cart .bar {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .btn.wa {
+    flex: 1;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero h1 {
+    font-size: 1.65rem;
+  }
+  .hero p {
+    font-size: 0.9rem;
+  }
+  .features-bar {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .feature-item {
+    font-size: 0.72rem;
+  }
+  .stand .mark b {
+    font-size: 1.5rem;
+  }
+}
