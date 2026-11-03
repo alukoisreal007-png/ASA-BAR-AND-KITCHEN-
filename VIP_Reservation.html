@@ -11,57 +11,86 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <style>
-    .vip-main { padding-block: 60px; background: var(--bg-black); min-height: 85vh; }
+    .vip-main { padding-block: 50px; background: var(--bg-black); min-height: 85vh; }
     .back { color: var(--gold); font-size: 0.9rem; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 24px; }
     .back:hover { color: var(--gold-hover); }
-    .vg { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 32px; margin-top: 32px; }
-    @media (max-width: 860px) { .vg { grid-template-columns: 1fr; } }
+    .vg { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 32px; margin-top: 28px; }
+    @media (max-width: 860px) { .vg { grid-template-columns: 1fr; gap: 20px; } }
     .blk { background: var(--bg-espresso); border: 1px solid var(--line); border-radius: 14px; padding: 24px; margin-bottom: 20px; }
     .blk h2 { font-size: 1.15rem; color: var(--ivory); margin-bottom: 16px; border-bottom: 1px solid var(--line-subtle); padding-bottom: 10px; }
+    
+    /* Zone Selector Cards */
     .zc { display: grid; grid-template-columns: 1fr; gap: 10px; }
-    .zcard { background: var(--bg-brown); border: 1px solid var(--line); border-radius: 10px; padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: all 0.2s; text-align: left; }
-    .zcard img { width: 44px; height: 44px; border-radius: 6px; object-fit: cover; }
-    .zcard span { font-weight: 600; color: var(--ivory); font-size: 0.95rem; margin-left: 12px; flex: 1; }
-    .zcard i { width: 20px; height: 20px; border-radius: 50%; border: 1px solid var(--line); display: grid; place-items: center; font-style: normal; font-size: 0.75rem; color: transparent; }
-    .zcard[aria-checked="true"] { border-color: var(--gold); background: rgba(198, 154, 80, 0.12); }
-    .zcard[aria-checked="true"] i { background: var(--gold); border-color: var(--gold); color: #080706; font-weight: bold; }
-    .two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    .man { background: var(--bg-brown); border: 1px solid var(--gold); border-radius: 14px; padding: 26px; height: fit-content; box-shadow: 0 15px 35px rgba(0,0,0,0.4); }
+    .zcard { 
+      background: var(--bg-brown); 
+      border: 1px solid var(--line); 
+      border-radius: 10px; 
+      padding: 12px 16px; 
+      display: flex; 
+      align-items: center; 
+      justify-content: space-between; 
+      cursor: pointer; 
+      transition: all 0.25s ease; 
+      text-align: left; 
+      width: 100%;
+    }
+    .zcard:hover { border-color: var(--gold); background: rgba(198, 154, 80, 0.08); }
+    .zcard img { width: 48px; height: 48px; border-radius: 6px; object-fit: cover; pointer-events: none; }
+    .zcard span { font-weight: 600; color: var(--ivory); font-size: 0.95rem; margin-left: 14px; flex: 1; pointer-events: none; }
+    .zcard i { width: 22px; height: 22px; border-radius: 50%; border: 1px solid var(--line); display: grid; place-items: center; font-style: normal; font-size: 0.75rem; color: transparent; pointer-events: none; }
+    
+    /* Active Selected Zone State */
+    .zcard.active, .zcard[aria-checked="true"] { 
+      border-color: var(--gold) !important; 
+      background: rgba(198, 154, 80, 0.16) !important; 
+      box-shadow: 0 0 15px rgba(198, 154, 80, 0.2);
+    }
+    .zcard.active i, .zcard[aria-checked="true"] i { 
+      background: var(--gold); 
+      border-color: var(--gold); 
+      color: #080706; 
+      font-weight: bold; 
+    }
+
+    .two { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    @media (max-width: 600px) { .two { grid-template-columns: 1fr; gap: 10px; } }
+
+    /* Live Manifest Card */
+    .man { background: var(--bg-brown); border: 1px solid var(--gold); border-radius: 14px; padding: 26px; height: fit-content; box-shadow: 0 15px 35px rgba(0,0,0,0.5); position: sticky; top: 100px; }
     .man h2 { color: var(--ivory); font-size: 1.25rem; margin-bottom: 14px; border-bottom: 1px solid var(--line); padding-bottom: 10px; }
     .mrow { display: flex; justify-content: space-between; padding-block: 8px; border-bottom: 1px dashed var(--line-subtle); font-size: 0.88rem; }
     .mrow span:first-child { color: var(--taupe); }
-    .mrow span:last-child { font-weight: 700; color: var(--ivory); }
+    .mrow span:last-child { font-weight: 700; color: var(--ivory); text-align: right; }
     .perks { list-style: none; margin: 18px 0; padding: 12px; background: rgba(198,154,80,0.06); border: 1px solid var(--line); border-radius: 8px; font-size: 0.8rem; color: var(--taupe); }
     .perks li { margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
     .perks li::before { content: "•"; color: var(--gold); font-weight: bold; }
-  
+
     @media (max-width: 768px) {
       .vip-main { padding-block: 30px; }
       .wrap { width: min(100% - 24px, 1180px); }
-      .vg { grid-template-columns: 1fr; gap: 20px; }
       .blk { padding: 18px 14px; }
-      .two { grid-template-columns: 1fr; gap: 10px; }
-      .man { padding: 20px 16px; }
+      .man { padding: 20px 16px; position: static; }
       .zcard { padding: 10px 12px; }
       .zcard img { width: 40px; height: 40px; }
-      .zcard span { font-size: 0.88rem; margin-left: 8px; }
+      .zcard span { font-size: 0.88rem; margin-left: 10px; }
       .btn.gold { font-size: 0.95rem; padding: 14px; }
     }
-
   </style>
 </head>
 <body>
 
+  <!-- Top Announcement Bar -->
   <div class="top">
     <div class="wrap">
       <div class="live">
         <span class="dot"></span>
         <span>ASA Bodija is Open 24/7 • 26 Osuntokun Avenue, Old Bodija</span>
       </div>
-      <button class="pill" data-staff>Staff Price Portal</button>
+      <a href="index.html" class="pill">Back to Home</a>
     </div>
   </div>
 
+  <!-- Header -->
   <header class="hdr">
     <div class="wrap">
       <a class="mark" href="index.html">
@@ -75,103 +104,131 @@
     </div>
   </header>
 
+  <!-- VIP Main Body -->
   <main class="vip-main">
     <div class="wrap">
       <a class="back" href="index.html">&larr; Back to Main Menu</a>
       <span class="section-tag">— VIP CONCIERGE</span>
       <h1>Reserve your VIP table</h1>
-      <p class="lead">Three quick steps. We turn your choices into a formatted manifest for the on-duty manager, who replies with your table number in 60 seconds.</p>
+      <p class="lead">Three quick steps. As you fill out your details, your VIP manifest updates in real time and sends straight to the manager on WhatsApp.</p>
 
       <div class="vg">
-        <form id="vf" novalidate>
+        <!-- Form Side -->
+        <form id="vf" novalidate onsubmit="return false;">
+          
+          <!-- Step 1: Zone Selection -->
           <div class="blk">
             <h2>Step 1: Choose your zone</h2>
             <div class="zc" role="radiogroup" aria-label="Zone">
-              <button type="button" class="zcard" role="radio" data-z="pool" aria-checked="true">
-                <img src="assets/zone_poolside_lounge.jpg" alt="">
+              <button type="button" class="zcard active" data-zone="The Poolside Cabanas" onclick="chooseZone(this, 'The Poolside Cabanas')">
+                <img src="assets/zone_poolside_lounge.jpg" alt="Poolside Cabanas">
                 <span>The Poolside Cabanas</span>
                 <i>&check;</i>
               </button>
-              <button type="button" class="zcard" role="radio" data-z="roof" aria-checked="false">
-                <img src="assets/zone_amber_bar.jpg" alt="">
+              
+              <button type="button" class="zcard" data-zone="Rooftop Sky Lounge" onclick="chooseZone(this, 'Rooftop Sky Lounge')">
+                <img src="assets/zone_amber_bar.jpg" alt="Rooftop Sky Lounge">
                 <span>Rooftop Sky Lounge</span>
                 <i>&check;</i>
               </button>
-              <button type="button" class="zcard" role="radio" data-z="hall" aria-checked="false">
-                <img src="assets/culture_dining_hall.jpg" alt="">
+              
+              <button type="button" class="zcard" data-zone="The Culture Dining Hall" onclick="chooseZone(this, 'The Culture Dining Hall')">
+                <img src="assets/culture_dining_hall.jpg" alt="Culture Dining Hall">
                 <span>The Culture Dining Hall</span>
                 <i>&check;</i>
               </button>
             </div>
           </div>
 
+          <!-- Step 2: Schedule & Party Specs (Type or Pick Date freely) -->
           <div class="blk">
             <h2>Step 2: Schedule &amp; party size</h2>
             <div class="two">
               <div class="field">
-                <label for="date">Date</label>
-                <input type="date" id="date">
-                <div class="err" id="date-err" style="color:#f87171; font-size:0.75rem;"></div>
+                <label for="bookDate">Date (Type freely or enter day)</label>
+                <input type="text" id="bookDate" placeholder="e.g. Today, Friday 7th Nov, or Tomorrow" oninput="updateLiveManifest()">
               </div>
+              
               <div class="field">
-                <label for="time">Time Slot</label>
-                <select id="time">
-                  <option>6:00 PM Sunset Hour</option>
-                  <option selected>8:00 PM Dinner Rush</option>
-                  <option>10:00 PM Late Night</option>
-                  <option>12:00 AM Nightlife</option>
+                <label for="bookTime">Time Slot</label>
+                <select id="bookTime" onchange="updateLiveManifest()">
+                  <option value="6:00 PM (Sunset Hour)">6:00 PM Sunset Hour</option>
+                  <option value="8:00 PM (Dinner Rush)" selected>8:00 PM Dinner Rush</option>
+                  <option value="10:00 PM (Late Night)">10:00 PM Late Night</option>
+                  <option value="12:00 AM (Nightlife)">12:00 AM Nightlife</option>
                 </select>
               </div>
+
               <div class="field">
-                <label for="size">Party Size</label>
-                <select id="size">
-                  <option>2 Guests</option>
-                  <option>4 Guests</option>
-                  <option selected>6 Guests VIP</option>
-                  <option>8-12+ Guests Celebration</option>
+                <label for="guestSize">Party Size</label>
+                <select id="guestSize" onchange="updateLiveManifest()">
+                  <option value="2 Guests (Intimate / Date)">2 Guests (Date Night)</option>
+                  <option value="4 Guests (Crew / Double Date)">4 Guests (Small Crew)</option>
+                  <option value="6 Guests (VIP Table)" selected>6 Guests (VIP Table)</option>
+                  <option value="8-12+ Guests (Celebration Booth)">8-12+ Guests (Celebration)</option>
                 </select>
               </div>
+
               <div class="field">
-                <label for="occ">Occasion</label>
-                <select id="occ">
-                  <option>Birthday Party</option>
-                  <option selected>Date Night</option>
-                  <option>Corporate Dinner</option>
-                  <option>Weekend Hangout</option>
+                <label for="guestOccasion">Occasion</label>
+                <select id="guestOccasion" onchange="updateLiveManifest()">
+                  <option value="Birthday VIP Celebration">Birthday Party</option>
+                  <option value="Romantic Date Night" selected>Date Night</option>
+                  <option value="Corporate / Executive Dinner">Corporate Dinner</option>
+                  <option value="Weekend Vibe &amp; Drinks">Weekend Hangout</option>
                 </select>
               </div>
             </div>
           </div>
 
+          <!-- Step 3: Contact & Notes -->
           <div class="blk">
             <h2>Step 3: Contact &amp; special notes</h2>
             <div class="two">
               <div class="field">
-                <label for="name">Full Name</label>
-                <input id="name" autocomplete="name" placeholder="e.g. Babatunde Alabi">
-                <div class="err" id="name-err" style="color:#f87171; font-size:0.75rem;"></div>
+                <label for="guestName">Full Name</label>
+                <input id="guestName" autocomplete="name" placeholder="e.g. Babatunde Alabi" oninput="updateLiveManifest()">
               </div>
               <div class="field">
-                <label for="phone">WhatsApp Number</label>
-                <input id="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="0803 123 4567">
-                <div class="err" id="phone-err" style="color:#f87171; font-size:0.75rem;"></div>
+                <label for="guestPhone">WhatsApp Number</label>
+                <input id="guestPhone" type="tel" inputmode="tel" autocomplete="tel" placeholder="e.g. 0803 123 4567" oninput="updateLiveManifest()">
               </div>
             </div>
+            
             <div class="field">
-              <label for="notes">Special requests (optional)</label>
-              <textarea id="notes" rows="2" placeholder="Birthday sparklers, champagne brand, seating preference"></textarea>
+              <label for="guestNotes">Special requests (optional)</label>
+              <textarea id="guestNotes" rows="2" placeholder="e.g. Birthday sparklers, champagne brand, corner booth preference" oninput="updateLiveManifest()"></textarea>
             </div>
           </div>
         </form>
 
+        <!-- Right Side: Live Booking Manifest Summary -->
         <aside class="man" aria-live="polite">
           <h2>Booking Summary</h2>
-          <div class="mrow"><span>Guest</span><span id="m-name">&mdash;</span></div>
-          <div class="mrow"><span>WhatsApp</span><span id="m-wa">&mdash;</span></div>
-          <div class="mrow"><span>When</span><span id="m-when">&mdash;</span></div>
-          <div class="mrow"><span>Zone</span><span id="m-zone" style="color:var(--gold);">&mdash;</span></div>
-          <div class="mrow"><span>Party</span><span id="m-size">&mdash;</span></div>
-          <div class="mrow"><span>Occasion</span><span id="m-occ">&mdash;</span></div>
+          <div class="mrow">
+            <span>Guest Name</span>
+            <span id="m-name">Babatunde Alabi</span>
+          </div>
+          <div class="mrow">
+            <span>WhatsApp</span>
+            <span id="m-wa">0803 123 4567</span>
+          </div>
+          <div class="mrow">
+            <span>Date &amp; Time</span>
+            <span id="m-when">Today @ 8:00 PM</span>
+          </div>
+          <div class="mrow">
+            <span>Selected Zone</span>
+            <span id="m-zone" style="color:var(--gold);">The Poolside Cabanas</span>
+          </div>
+          <div class="mrow">
+            <span>Party Size</span>
+            <span id="m-size">6 Guests (VIP Table)</span>
+          </div>
+          <div class="mrow">
+            <span>Occasion</span>
+            <span id="m-occ">Date Night</span>
+          </div>
 
           <ul class="perks">
             <li>Dedicated table floor steward</li>
@@ -179,7 +236,7 @@
             <li>Table held for 30 minutes past reservation time</li>
           </ul>
 
-          <button class="btn gold" style="width:100%; justify-content:center; padding:14px;" type="submit" form="vf">
+          <button class="btn gold" style="width:100%; justify-content:center; padding:15px; font-size:1rem;" onclick="submitVIPManifest()">
             Confirm VIP Table on WhatsApp &rarr;
           </button>
         </aside>
@@ -187,35 +244,92 @@
     </div>
   </main>
 
-  <!-- Staff Modal -->
-  <div class="ov" id="staff" role="dialog" aria-modal="true" aria-labelledby="st-t">
-    <div class="modal">
-      <button class="x" id="staff-close" aria-label="Close">&times;</button>
-      <div id="pin-view">
-        <h2 id="st-t">Staff Price Portal</h2>
-        <p class="lead" style="margin-bottom:18px; font-size:0.9rem;">Enter the 4-digit manager PIN to edit prices.</p>
-        <form id="pin-form">
-          <div class="field">
-            <label for="pin">Manager PIN</label>
-            <input id="pin" type="password" inputmode="numeric" maxlength="4" autocomplete="off" placeholder="Enter PIN (Demo: 1234)">
-            <div class="err" id="pin-err" style="color:#f87171; font-size:0.8rem; margin-top:4px;"></div>
-          </div>
-          <button class="btn gold" type="submit" style="width:100%;">Unlock Price Editor</button>
-        </form>
-      </div>
-      <div id="edit-view" class="hide">
-        <h2>Live Price Control</h2>
-        <p class="lead" style="font-size:0.85rem; margin-bottom:14px;">Changes appear on the customer menu instantly.</p>
-        <div id="edit-list"></div>
-        <p class="err" id="save-msg" style="color:var(--gold); margin-top:10px; font-size:0.85rem;"></p>
-        <div class="mact">
-          <button class="btn gold" id="save">Save &amp; Publish Live</button>
-          <button class="btn" id="reset">Reset Defaults</button>
-        </div>
-      </div>
+  <footer>
+    <div class="wrap" style="text-align:center;">
+      <p class="copy">&copy; 2026 ASA Bar &amp; Kitchen. 26 Osuntokun Avenue, Old Bodija, Ibadan. Manager Hotline: +234 802 974 3214</p>
     </div>
-  </div>
+  </footer>
 
-  <script src="app.js" defer></script>
+  <!-- Bulletproof VIP Form Script -->
+  <script>
+    let activeZone = "The Poolside Cabanas";
+
+    // Set default friendly date
+    document.addEventListener("DOMContentLoaded", function() {
+      const dateInput = document.getElementById("bookDate");
+      if (dateInput && !dateInput.value) {
+        const d = new Date();
+        const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        dateInput.value = "Today (" + days[d.getDay()] + ", " + d.getDate() + " " + months[d.getMonth()] + ")";
+      }
+      updateLiveManifest();
+    });
+
+    // Zone Selection Function
+    function chooseZone(btn, zoneName) {
+      document.querySelectorAll(".zcard").forEach(function(el) {
+        el.classList.remove("active");
+        el.setAttribute("aria-checked", "false");
+      });
+      btn.classList.add("active");
+      btn.setAttribute("aria-checked", "true");
+      activeZone = zoneName;
+      updateLiveManifest();
+    }
+
+    // Real-Time Live Manifest Updater
+    function updateLiveManifest() {
+      const name = document.getElementById("guestName").value.trim() || "Babatunde Alabi";
+      const phone = document.getElementById("guestPhone").value.trim() || "0803 123 4567";
+      const date = document.getElementById("bookDate").value.trim() || "Today";
+      const timeSelect = document.getElementById("bookTime");
+      const time = timeSelect.options[timeSelect.selectedIndex].text;
+      
+      const sizeSelect = document.getElementById("guestSize");
+      const size = sizeSelect.options[sizeSelect.selectedIndex].text;
+      
+      const occSelect = document.getElementById("guestOccasion");
+      const occ = occSelect.options[occSelect.selectedIndex].text;
+
+      document.getElementById("m-name").textContent = name;
+      document.getElementById("m-wa").textContent = phone;
+      document.getElementById("m-when").textContent = date + " @ " + time;
+      document.getElementById("m-zone").textContent = activeZone;
+      document.getElementById("m-size").textContent = size;
+      document.getElementById("m-occ").textContent = occ;
+    }
+
+    // Submit Manifest Directly to WhatsApp
+    function submitVIPManifest() {
+      const name = document.getElementById("guestName").value.trim() || "Guest";
+      const phone = document.getElementById("guestPhone").value.trim() || "Not provided";
+      const date = document.getElementById("bookDate").value.trim() || "Today";
+      const timeSelect = document.getElementById("bookTime");
+      const time = timeSelect.options[timeSelect.selectedIndex].text;
+      const sizeSelect = document.getElementById("guestSize");
+      const size = sizeSelect.options[sizeSelect.selectedIndex].text;
+      const occSelect = document.getElementById("guestOccasion");
+      const occ = occSelect.options[occSelect.selectedIndex].text;
+      const notes = document.getElementById("guestNotes").value.trim();
+
+      let msg = "*VIP TABLE RESERVATION MANIFEST — ASA KITCHEN*\\n\\n" +
+        "*Guest Name:* " + name + "\\n" +
+        "*WhatsApp Contact:* " + phone + "\\n" +
+        "*Schedule:* " + date + " @ " + time + "\\n" +
+        "*Zone Requested:* " + activeZone + "\\n" +
+        "*Party Size:* " + size + "\\n" +
+        "*Occasion:* " + occ + "\\n";
+
+      if (notes) {
+        msg += "*Special Requests:* " + notes + "\\n";
+      }
+
+      msg += "\\n_Please confirm availability and assign table number._";
+
+      const url = "https://wa.me/2348029743214?text=" + encodeURIComponent(msg);
+      window.open(url, "_blank");
+    }
+  </script>
 </body>
 </html>
