@@ -133,10 +133,95 @@
       </div>
 
       <!-- Category Filter Tabs -->
-      <div class="tabs" id="tabs" role="tablist" aria-label="Menu categories"></div>
+      <div class="tabs" id="tabs" role="tablist" aria-label="Menu categories">
+        <button class="tab" role="tab" data-t="all" aria-selected="true">All Offerings</button>
+        <button class="tab" role="tab" data-t="food" aria-selected="false">Food</button>
+        <button class="tab" role="tab" data-t="drinks" aria-selected="false">Drinks</button>
+        <button class="tab" role="tab" data-t="cocktails" aria-selected="false">Cocktails</button>
+        <button class="tab" role="tab" data-t="specials" aria-selected="false">Specials</button>
+        <button class="tab" role="tab" data-t="vip" aria-selected="false">VIP Bottle &amp; Shisha</button>
+      </div>
 
       <!-- Menu Grid -->
-      <div class="menu" id="menu-grid"></div>
+      <div class="menu" id="menu-grid">
+        <!-- 1. Grilled Fish -->
+        <article class="item" data-cat="food specials">
+          <div class="ph"><img loading="lazy" src="assets/menu_grilled_fish.jpg" alt="Grilled Fish"></div>
+          <div class="bd">
+            <h3>Grilled Fish</h3>
+            <p style="font-size:0.8rem; color:var(--taupe); line-height:1.4;">Freshly prepared whole fish with signature yaji seasoning and lime.</p>
+            <div class="row">
+              <span class="pr">₦6,500</span>
+              <button class="btn gold sm" data-add="1">Order Now &rarr;</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- 2. Signature Mojito -->
+        <article class="item" data-cat="cocktails drinks">
+          <div class="ph"><img loading="lazy" src="assets/menu_signature_mojito.jpg" alt="Signature Mojito"></div>
+          <div class="bd">
+            <h3>Signature Mojito</h3>
+            <p style="font-size:0.8rem; color:var(--taupe); line-height:1.4;">Craft botanical mix with fresh crushed mint, lime juice, and soda.</p>
+            <div class="row">
+              <span class="pr">₦4,000</span>
+              <button class="btn gold sm" data-add="2">Order Now &rarr;</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- 3. Suya Platter -->
+        <article class="item" data-cat="food specials">
+          <div class="ph"><img loading="lazy" src="assets/menu_suya_platter.jpg" alt="Suya Platter"></div>
+          <div class="bd">
+            <h3>Suya Platter</h3>
+            <p style="font-size:0.8rem; color:var(--taupe); line-height:1.4;">Tender charred skewers with sliced red onions and native pepper rub.</p>
+            <div class="row">
+              <span class="pr">₦5,500</span>
+              <button class="btn gold sm" data-add="3">Order Now &rarr;</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- 4. Classic Margarita -->
+        <article class="item" data-cat="cocktails drinks">
+          <div class="ph"><img loading="lazy" src="assets/menu_classic_margarita.jpg" alt="Classic Margarita"></div>
+          <div class="bd">
+            <h3>Classic Margarita</h3>
+            <p style="font-size:0.8rem; color:var(--taupe); line-height:1.4;">Crisp tequila blend with triple sec, fresh lime, and sea salt rim.</p>
+            <div class="row">
+              <span class="pr">₦4,500</span>
+              <button class="btn gold sm" data-add="4">Order Now &rarr;</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- 5. Firewood Jollof & Asun -->
+        <article class="item" data-cat="food">
+          <div class="ph"><img loading="lazy" src="assets/menu_jollof_rice.jpg" alt="Firewood Jollof & Asun"></div>
+          <div class="bd">
+            <h3>Firewood Jollof &amp; Asun</h3>
+            <p style="font-size:0.8rem; color:var(--taupe); line-height:1.4;">Smoky party jollof rice served with peppered goat meat and sweet dodo.</p>
+            <div class="row">
+              <span class="pr">₦9,500</span>
+              <button class="btn gold sm" data-add="5">Order Now &rarr;</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- 6. VIP Bottle Service -->
+        <article class="item" data-cat="vip drinks">
+          <div class="ph"><img loading="lazy" src="assets/craft_cocktails.jpg" alt="VIP Bottle & Shisha Suite"></div>
+          <div class="bd">
+            <h3>VIP Bottle &amp; Shisha Suite</h3>
+            <p style="font-size:0.8rem; color:var(--taupe); line-height:1.4;">Hennessy VSOP bottle service with ice shisha and dedicated sparklers.</p>
+            <div class="row">
+              <span class="pr">₦165,000</span>
+              <button class="btn gold sm" data-add="6">Order Now &rarr;</button>
+            </div>
+          </div>
+        </article>
+      </div>
     </div>
   </section>
 
