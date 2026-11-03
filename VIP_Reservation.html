@@ -1,27 +1,207 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Book a VIP Table | ÀSÀ Bar & Kitchen, Old Bodija</title><meta name="description" content="Reserve a poolside cabana, rooftop table, or dining hall booth at ÀSÀ and send a structured manifest to the manager on WhatsApp."><meta name="theme-color" content="#080B10"><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E%F0%9F%8D%B8%3C/text%3E%3C/svg%3E"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap" rel="stylesheet"><link rel="stylesheet" href="styles.css"></head><body><div class="top"><div class="wrap"><div class="live"><span class="dot"></span><span>ÀSÀ Bodija is Open 24/7<span class="long"> • 26 Osuntokun Avenue, Old Bodija</span></span></div><button class="pill" data-staff>🔒 Staff Price Control</button></div></div><header class="hdr"><div class="wrap"><a class="mark" href="index.html" aria-label="ÀSÀ Bar and Kitchen home"><b>ÀSÀ</b><small>Bar &amp; Kitchen • Bodija</small></a><div class="acts"><a class="btn" href="index.html#menu">🍽️ Browse Menu</a><a class="btn gold" href="VIP_Reservation.html">✨ Book VIP Table</a></div></div></header>
-<main class="vip"><div class="wrap"><a class="back" href="index.html">← Back to Main Menu</a>
-<h1>Reserve your VIP table</h1><p class="lead">Three quick steps. We turn your choices into a WhatsApp message for the on-duty manager, who replies with your table number.</p>
-<div class="vg" style="margin-top:28px"><form id="vf" novalidate>
-<div class="blk" style="margin-top:0"><h2>Step 1: Choose your zone</h2><div class="zc" role="radiogroup" aria-label="Zone">
-<button type="button" class="zcard" role="radio" data-z="pool" aria-checked="true"><img src="assets/poolside_cabanas.jpg" alt=""><span>Poolside Cabana</span><i>✓</i></button>
-<button type="button" class="zcard" role="radio" data-z="roof" aria-checked="false"><img src="assets/rooftop_skylounge.jpg" alt=""><span>Rooftop Sky Lounge</span><i>✓</i></button>
-<button type="button" class="zcard" role="radio" data-z="hall" aria-checked="false"><img src="assets/culture_dining_hall.jpg" alt=""><span>Culture Dining Hall</span><i>✓</i></button></div></div>
-<div class="blk"><h2>Step 2: Schedule &amp; party size</h2><div class="two">
-<div class="field"><label for="date">Date</label><input type="date" id="date"><div class="err" id="date-err"></div></div>
-<div class="field"><label for="time">Time</label><select id="time"><option>6:00 PM Sunset</option><option selected>8:00 PM Dinner Rush</option><option>10:00 PM Late Night</option><option>12:00 AM Nightlife</option></select></div>
-<div class="field"><label for="size">Party size</label><select id="size"><option>2 Guests</option><option>4 Guests</option><option selected>6 Guests VIP</option><option>8-12+ Guests Celebration</option></select></div>
-<div class="field"><label for="occ">Occasion</label><select id="occ"><option>Birthday Party</option><option>Date Night</option><option>Corporate Dinner</option><option>Weekend Hangout</option></select></div></div></div>
-<div class="blk"><h2>Step 3: Contact &amp; notes</h2><div class="two">
-<div class="field"><label for="name">Full name</label><input id="name" autocomplete="name" placeholder="e.g. Babatunde Alabi"><div class="err" id="name-err"></div></div>
-<div class="field"><label for="phone">WhatsApp number</label><input id="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="0803 123 4567"><div class="err" id="phone-err"></div></div></div>
-<div class="field"><label for="notes">Special requests (optional)</label><textarea id="notes" rows="3" placeholder="Birthday sparklers, champagne brand, seating preference"></textarea></div></div>
-</form>
-<aside class="man" aria-live="polite"><h2>Your booking summary</h2>
-<div class="mrow"><span>Guest</span><span id="m-name"></span></div><div class="mrow"><span>WhatsApp</span><span id="m-wa"></span></div><div class="mrow"><span>When</span><span id="m-when"></span></div><div class="mrow"><span>Zone</span><span id="m-zone"></span></div><div class="mrow"><span>Party</span><span id="m-size"></span></div><div class="mrow"><span>Occasion</span><span id="m-occ"></span></div>
-<ul class="perks"><li>Dedicated table floor steward</li><li>Skip-the-line hostess seating</li><li>Table held for 30 minutes past reservation time</li></ul>
-<button class="btn wa" type="submit" form="vf">🚀 Lock VIP Table on WhatsApp</button></aside></div></div></main>
-<div class="ov" id="staff" role="dialog" aria-modal="true" aria-labelledby="st-t"><div class="modal"><button class="x" id="staff-close" aria-label="Close">×</button>
-<div id="pin-view"><h2 id="st-t">Staff price control</h2><p class="lead" style="margin-bottom:18px;font-size:.92rem">Enter the 4-digit manager PIN to edit prices.</p>
-<form id="pin-form"><div class="field"><label for="pin">Manager PIN</label><input id="pin" type="password" inputmode="numeric" maxlength="4" autocomplete="off"><div class="err" id="pin-err"></div></div><button class="btn gold" type="submit">Unlock Price Editor</button></form></div>
-<div id="edit-view" class="hide"><h2>Edit prices &amp; availability</h2><p class="lead" style="font-size:.9rem">Changes appear on the customer menu instantly, with no page reload.</p><div id="edit-list"></div><p class="err" id="save-msg" style="color:var(--wa);margin-top:10px"></p>
-<div class="mact"><button class="btn gold" id="save">💾 Save &amp; Publish Live</button><button class="btn" id="reset">Reset Defaults</button></div></div></div></div><script src="app.js" defer></script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VIP Table Reservation | ASA Bar &amp; Kitchen, Old Bodija</title>
+  <meta name="description" content="Reserve a poolside cabana, rooftop table, or dining hall booth at ASA and send a structured manifest to the manager on WhatsApp.">
+  <meta name="theme-color" content="#080706">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .vip-main { padding-block: 60px; background: var(--bg-black); min-height: 85vh; }
+    .back { color: var(--gold); font-size: 0.9rem; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 24px; }
+    .back:hover { color: var(--gold-hover); }
+    .vg { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 32px; margin-top: 32px; }
+    @media (max-width: 860px) { .vg { grid-template-columns: 1fr; } }
+    .blk { background: var(--bg-espresso); border: 1px solid var(--line); border-radius: 14px; padding: 24px; margin-bottom: 20px; }
+    .blk h2 { font-size: 1.15rem; color: var(--ivory); margin-bottom: 16px; border-bottom: 1px solid var(--line-subtle); padding-bottom: 10px; }
+    .zc { display: grid; grid-template-columns: 1fr; gap: 10px; }
+    .zcard { background: var(--bg-brown); border: 1px solid var(--line); border-radius: 10px; padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: all 0.2s; text-align: left; }
+    .zcard img { width: 44px; height: 44px; border-radius: 6px; object-fit: cover; }
+    .zcard span { font-weight: 600; color: var(--ivory); font-size: 0.95rem; margin-left: 12px; flex: 1; }
+    .zcard i { width: 20px; height: 20px; border-radius: 50%; border: 1px solid var(--line); display: grid; place-items: center; font-style: normal; font-size: 0.75rem; color: transparent; }
+    .zcard[aria-checked="true"] { border-color: var(--gold); background: rgba(198, 154, 80, 0.12); }
+    .zcard[aria-checked="true"] i { background: var(--gold); border-color: var(--gold); color: #080706; font-weight: bold; }
+    .two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .man { background: var(--bg-brown); border: 1px solid var(--gold); border-radius: 14px; padding: 26px; height: fit-content; box-shadow: 0 15px 35px rgba(0,0,0,0.4); }
+    .man h2 { color: var(--ivory); font-size: 1.25rem; margin-bottom: 14px; border-bottom: 1px solid var(--line); padding-bottom: 10px; }
+    .mrow { display: flex; justify-content: space-between; padding-block: 8px; border-bottom: 1px dashed var(--line-subtle); font-size: 0.88rem; }
+    .mrow span:first-child { color: var(--taupe); }
+    .mrow span:last-child { font-weight: 700; color: var(--ivory); }
+    .perks { list-style: none; margin: 18px 0; padding: 12px; background: rgba(198,154,80,0.06); border: 1px solid var(--line); border-radius: 8px; font-size: 0.8rem; color: var(--taupe); }
+    .perks li { margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+    .perks li::before { content: "•"; color: var(--gold); font-weight: bold; }
+  </style>
+</head>
+<body>
+
+  <div class="top">
+    <div class="wrap">
+      <div class="live">
+        <span class="dot"></span>
+        <span>ASA Bodija is Open 24/7 • 26 Osuntokun Avenue, Old Bodija</span>
+      </div>
+      <button class="pill" data-staff>Staff Price Portal</button>
+    </div>
+  </div>
+
+  <header class="hdr">
+    <div class="wrap">
+      <a class="mark" href="index.html">
+        <b>ASA</b>
+        <small>Bar &amp; Kitchen • Bodija</small>
+      </a>
+      <div class="acts">
+        <a class="btn" href="index.html#menu">Browse Menu</a>
+        <a class="btn gold" href="VIP_Reservation.html">Book a Table &rarr;</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="vip-main">
+    <div class="wrap">
+      <a class="back" href="index.html">&larr; Back to Main Menu</a>
+      <span class="section-tag">— VIP CONCIERGE</span>
+      <h1>Reserve your VIP table</h1>
+      <p class="lead">Three quick steps. We turn your choices into a formatted manifest for the on-duty manager, who replies with your table number in 60 seconds.</p>
+
+      <div class="vg">
+        <form id="vf" novalidate>
+          <div class="blk">
+            <h2>Step 1: Choose your zone</h2>
+            <div class="zc" role="radiogroup" aria-label="Zone">
+              <button type="button" class="zcard" role="radio" data-z="pool" aria-checked="true">
+                <img src="assets/zone_poolside_lounge.jpg" alt="">
+                <span>The Poolside Cabanas</span>
+                <i>&check;</i>
+              </button>
+              <button type="button" class="zcard" role="radio" data-z="roof" aria-checked="false">
+                <img src="assets/zone_amber_bar.jpg" alt="">
+                <span>Rooftop Sky Lounge</span>
+                <i>&check;</i>
+              </button>
+              <button type="button" class="zcard" role="radio" data-z="hall" aria-checked="false">
+                <img src="assets/culture_dining_hall.jpg" alt="">
+                <span>The Culture Dining Hall</span>
+                <i>&check;</i>
+              </button>
+            </div>
+          </div>
+
+          <div class="blk">
+            <h2>Step 2: Schedule &amp; party size</h2>
+            <div class="two">
+              <div class="field">
+                <label for="date">Date</label>
+                <input type="date" id="date">
+                <div class="err" id="date-err" style="color:#f87171; font-size:0.75rem;"></div>
+              </div>
+              <div class="field">
+                <label for="time">Time Slot</label>
+                <select id="time">
+                  <option>6:00 PM Sunset Hour</option>
+                  <option selected>8:00 PM Dinner Rush</option>
+                  <option>10:00 PM Late Night</option>
+                  <option>12:00 AM Nightlife</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="size">Party Size</label>
+                <select id="size">
+                  <option>2 Guests</option>
+                  <option>4 Guests</option>
+                  <option selected>6 Guests VIP</option>
+                  <option>8-12+ Guests Celebration</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="occ">Occasion</label>
+                <select id="occ">
+                  <option>Birthday Party</option>
+                  <option selected>Date Night</option>
+                  <option>Corporate Dinner</option>
+                  <option>Weekend Hangout</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="blk">
+            <h2>Step 3: Contact &amp; special notes</h2>
+            <div class="two">
+              <div class="field">
+                <label for="name">Full Name</label>
+                <input id="name" autocomplete="name" placeholder="e.g. Babatunde Alabi">
+                <div class="err" id="name-err" style="color:#f87171; font-size:0.75rem;"></div>
+              </div>
+              <div class="field">
+                <label for="phone">WhatsApp Number</label>
+                <input id="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="0803 123 4567">
+                <div class="err" id="phone-err" style="color:#f87171; font-size:0.75rem;"></div>
+              </div>
+            </div>
+            <div class="field">
+              <label for="notes">Special requests (optional)</label>
+              <textarea id="notes" rows="2" placeholder="Birthday sparklers, champagne brand, seating preference"></textarea>
+            </div>
+          </div>
+        </form>
+
+        <aside class="man" aria-live="polite">
+          <h2>Booking Summary</h2>
+          <div class="mrow"><span>Guest</span><span id="m-name">&mdash;</span></div>
+          <div class="mrow"><span>WhatsApp</span><span id="m-wa">&mdash;</span></div>
+          <div class="mrow"><span>When</span><span id="m-when">&mdash;</span></div>
+          <div class="mrow"><span>Zone</span><span id="m-zone" style="color:var(--gold);">&mdash;</span></div>
+          <div class="mrow"><span>Party</span><span id="m-size">&mdash;</span></div>
+          <div class="mrow"><span>Occasion</span><span id="m-occ">&mdash;</span></div>
+
+          <ul class="perks">
+            <li>Dedicated table floor steward</li>
+            <li>Skip-the-line hostess seating</li>
+            <li>Table held for 30 minutes past reservation time</li>
+          </ul>
+
+          <button class="btn gold" style="width:100%; justify-content:center; padding:14px;" type="submit" form="vf">
+            Confirm VIP Table on WhatsApp &rarr;
+          </button>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <!-- Staff Modal -->
+  <div class="ov" id="staff" role="dialog" aria-modal="true" aria-labelledby="st-t">
+    <div class="modal">
+      <button class="x" id="staff-close" aria-label="Close">&times;</button>
+      <div id="pin-view">
+        <h2 id="st-t">Staff Price Portal</h2>
+        <p class="lead" style="margin-bottom:18px; font-size:0.9rem;">Enter the 4-digit manager PIN to edit prices.</p>
+        <form id="pin-form">
+          <div class="field">
+            <label for="pin">Manager PIN</label>
+            <input id="pin" type="password" inputmode="numeric" maxlength="4" autocomplete="off" placeholder="Enter PIN (Demo: 1234)">
+            <div class="err" id="pin-err" style="color:#f87171; font-size:0.8rem; margin-top:4px;"></div>
+          </div>
+          <button class="btn gold" type="submit" style="width:100%;">Unlock Price Editor</button>
+        </form>
+      </div>
+      <div id="edit-view" class="hide">
+        <h2>Live Price Control</h2>
+        <p class="lead" style="font-size:0.85rem; margin-bottom:14px;">Changes appear on the customer menu instantly.</p>
+        <div id="edit-list"></div>
+        <p class="err" id="save-msg" style="color:var(--gold); margin-top:10px; font-size:0.85rem;"></p>
+        <div class="mact">
+          <button class="btn gold" id="save">Save &amp; Publish Live</button>
+          <button class="btn" id="reset">Reset Defaults</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
