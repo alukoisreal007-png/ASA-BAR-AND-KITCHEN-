@@ -47,9 +47,12 @@ function save(){
 function renderMenu(){
   var m=$('#menu-grid');
   if(!m)return;
-  $('#tabs').innerHTML=TABS.map(function(t){
-    return '<button class="tab" role="tab" data-t="'+t[0]+'" aria-selected="'+(t[0]===tab)+'">'+t[1]+'</button>';
-  }).join('');
+  var tabsEl=$('#tabs');
+  if(tabsEl){
+    tabsEl.innerHTML=TABS.map(function(t){
+      return '<button class="tab" role="tab" data-t="'+t[0]+'" aria-selected="'+(t[0]===tab)+'">'+t[1]+'</button>';
+    }).join('');
+  }
 
   m.innerHTML=items.filter(function(i){
     return tab==='all'||i.cats.indexOf(tab)>-1;
@@ -82,6 +85,12 @@ document.addEventListener('click',function(e){
     if(cart[id]<=0)delete cart[id];
     renderCart();
   }
+
+  var s=e.target.closest('[data-staff]');
+  if(s){
+    e.preventDefault();
+    openStaff();
+  }
 });
 
 /* ---------- cart ---------- */
@@ -101,91 +110,116 @@ function renderCart(){
   c.classList.toggle('show',k.n>0);
   if(!k.n)c.classList.remove('open');
 
-  $('#cart-list').innerHTML=k.lines.map(function(l){
-    return '<div class="ci"><span>'+l.i.name+'<br><small style="color:var(--taupe)">'+naira(l.i.price)+' each</small></span><span class="qty"><button aria-label="Remove one" data-q="-1" data-id="'+l.i.id+'">&minus;</button>'+l.q+'<button aria-label="Add one" data-q="1" data-id="'+l.i.id+'">+</button></span></div>';
-  }).join('');
+  var cl=$('#cart-list');
+  if(cl){
+    cl.innerHTML=k.lines.map(function(l){
+      return '<div class="ci"><span>'+l.i.name+'<br><small style="color:var(--taupe)">'+naira(l.i.price)+' each</small></span><span class="qty"><button aria-label="Remove one" data-q="-1" data-id="'+l.i.id+'">&minus;</button>'+l.q+'<button aria-label="Add one" data-q="1" data-id="'+l.i.id+'">+</button></span></div>';
+    }).join('');
+  }
 
   var b=$('#cart-go');
-  b.textContent=k.n+' Item'+(k.n>1?'s':'')+' • '+naira(k.tot)+' — Order via WhatsApp';
-  b.href=wa('*PRE-ORDER — ASA BAR & KITCHEN*
-
-'+k.lines.map(function(l){return l.q+' x '+l.i.name+' ('+naira(l.q*l.i.price)+')'}).join('
-')+'
-
-*Total Amount:* '+naira(k.tot)+'
-
-_Please confirm availability and preparation time._');
+  if(b){
+    b.textContent=k.n+' Item'+(k.n>1?'s':'')+' • '+naira(k.tot)+' — Order via WhatsApp';
+    var orderLines = k.lines.map(function(l){
+      return l.q+' x '+l.i.name+' ('+naira(l.q*l.i.price)+')';
+    }).join('\n');
+    var msg = '*PRE-ORDER — ASA BAR & KITCHEN*\n\n' + orderLines + '\n\n*Total Amount:* ' + naira(k.tot) + '\n\n_Please confirm availability and preparation time._';
+    b.href=wa(msg);
+  }
 }
 
 var tg=$('#cart-toggle');
 if(tg)tg.onclick=function(){
   var c=$('#cart');
-  c.classList.toggle('open');
-  tg.setAttribute('aria-expanded',c.classList.contains('open'));
+  if(c){
+    c.classList.toggle('open');
+    tg.setAttribute('aria-expanded',c.classList.contains('open'));
+  }
 };
 
 /* ---------- staff modal ---------- */
 var ov=$('#staff'), lastFocus;
 function openStaff(){
+  if(!ov) ov=$('#staff');
+  if(!ov) return;
   lastFocus=document.activeElement;
   ov.classList.add('show');
-  $('#pin-view').classList.remove('hide');
-  $('#edit-view').classList.add('hide');
-  $('#pin').value='';
-  $('#pin-err').textContent='';
-  setTimeout(function(){$('#pin').focus()},50);
+  var pv=$('#pin-view'), ev=$('#edit-view');
+  if(pv) pv.classList.remove('hide');
+  if(ev) ev.classList.add('hide');
+  var pin=$('#pin'), err=$('#pin-err');
+  if(pin) pin.value='';
+  if(err) err.textContent='';
+  setTimeout(function(){if(pin) pin.focus()},50);
 }
 function closeStaff(){
-  ov.classList.remove('show');
+  if(ov) ov.classList.remove('show');
   if(lastFocus)lastFocus.focus();
 }
 
 function drawEditor(){
-  $('#edit-list').innerHTML=items.map(function(i){
+  var el=$('#edit-list');
+  if(!el)return;
+  el.innerHTML=items.map(function(i){
     return '<div class="srow"><div>'+i.name+'</div><input type="number" min="0" step="100" data-p="'+i.id+'" value="'+i.price+'"><label style="font-size:0.78rem; display:flex; align-items:center; gap:4px;"><input type="checkbox" data-o="'+i.id+'"'+(i.out?' checked':'')+'> Sold Out</label></div>';
   }).join('');
 }
 
-$$('[data-staff]').forEach(function(b){b.onclick=openStaff});
 if(ov){
-  $('#staff-close').onclick=closeStaff;
+  var sc=$('#staff-close');
+  if(sc) sc.onclick=closeStaff;
   ov.addEventListener('click',function(e){if(e.target===ov)closeStaff();});
   document.addEventListener('keydown',function(e){if(e.key==='Escape'&&ov.classList.contains('show'))closeStaff();});
 
-  $('#pin-form').onsubmit=function(e){
-    e.preventDefault();
-    if($('#pin').value==='1234'){
-      $('#pin-view').classList.add('hide');
-      $('#edit-view').classList.remove('hide');
+  var pf=$('#pin-form');
+  if(pf){
+    pf.onsubmit=function(e){
+      e.preventDefault();
+      var pinVal=$('#pin')?$('#pin').value:'';
+      if(pinVal==='1234'){
+        var pv=$('#pin-view'), ev=$('#edit-view');
+        if(pv) pv.classList.add('hide');
+        if(ev) ev.classList.remove('hide');
+        drawEditor();
+      }else{
+        var pe=$('#pin-err');
+        if(pe) pe.textContent='Incorrect PIN. Enter 1234.';
+        if($('#pin')) $('#pin').select();
+      }
+    };
+  }
+
+  var sv=$('#save');
+  if(sv){
+    sv.onclick=function(){
+      $$('[data-p]').forEach(function(inp){
+        var it=items.filter(function(i){return i.id==inp.dataset.p})[0], v=parseInt(inp.value,10);
+        if(v>=0&&it)it.price=v;
+      });
+      $$('[data-o]').forEach(function(c){
+        var it=items.filter(function(i){return i.id==c.dataset.o})[0];
+        if(it) it.out=c.checked;
+      });
+      save();
+      renderMenu();
+      renderCart();
+      var sm=$('#save-msg');
+      if(sm) sm.textContent='Published live to menu!';
+    };
+  }
+
+  var rs=$('#reset');
+  if(rs){
+    rs.onclick=function(){
+      items=DEFAULTS.map(function(d){return Object.assign({},d,{out:false})});
+      save();
       drawEditor();
-    }else{
-      $('#pin-err').textContent='Incorrect PIN. Enter 1234.';
-      $('#pin').select();
-    }
-  };
-
-  $('#save').onclick=function(){
-    $$('[data-p]').forEach(function(inp){
-      var it=items.filter(function(i){return i.id==inp.dataset.p})[0], v=parseInt(inp.value,10);
-      if(v>=0)it.price=v;
-    });
-    $$('[data-o]').forEach(function(c){
-      items.filter(function(i){return i.id==c.dataset.o})[0].out=c.checked;
-    });
-    save();
-    renderMenu();
-    renderCart();
-    $('#save-msg').textContent='Published live to menu!';
-  };
-
-  $('#reset').onclick=function(){
-    items=DEFAULTS.map(function(d){return Object.assign({},d,{out:false})});
-    save();
-    drawEditor();
-    renderMenu();
-    renderCart();
-    $('#save-msg').textContent='Factory prices restored.';
-  };
+      renderMenu();
+      renderCart();
+      var sm=$('#save-msg');
+      if(sm) sm.textContent='Factory prices restored.';
+    };
+  }
 }
 
 /* ---------- reputation ---------- */
@@ -201,6 +235,7 @@ if(st){
     var n=+b.dataset.s;
     $$('.star',st).forEach(function(s){s.classList.toggle('on',+s.dataset.s<=n)});
     var r=$('#res');
+    if(!r) return;
     r.className='res show';
     r.innerHTML=n>=4 ?
       '<p>Thank you for dining with us! A review on Google Maps helps other Bodija diners discover ASA.</p><a class="btn gold" target="_blank" rel="noopener" href="'+MAPS+'">Post Review on Google Maps &rarr;</a>' :
