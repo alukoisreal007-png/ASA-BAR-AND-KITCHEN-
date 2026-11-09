@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <!-- Neon Glow Filter -->
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <!-- Background Gradient -->
+    <radialGradient id="bgGlow" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#2a1b0c"/>
+      <stop offset="100%" stop-color="#080706"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Dark Luxury Rounded Badge -->
+  <rect width="64" height="64" rx="14" fill="url(#bgGlow)"/>
+  <rect x="1.5" y="1.5" width="61" height="61" rx="12.5" fill="none" stroke="#C69A50" stroke-width="1.2" stroke-opacity="0.35"/>
+
+  <!-- Neon Glow Underlying Layer -->
+  <text x="32" y="38" text-anchor="middle" font-family="'Playfair Display', Georgia, 'Times New Roman', serif" font-weight="900" font-size="20" letter-spacing="3" fill="#D8AA5E" opacity="0.8" filter="url(#glow)">ASA</text>
+  
+  <!-- Neon Core Crisp Foreground -->
+  <text x="32" y="38" text-anchor="middle" font-family="'Playfair Display', Georgia, 'Times New Roman', serif" font-weight="900" font-size="20" letter-spacing="3" fill="#FFF4D4">ASA</text>
+
+  <!-- Glowing Accent Bar -->
+  <line x1="20" y1="46" x2="44" y2="46" stroke="#D8AA5E" stroke-width="2" stroke-linecap="round" filter="url(#glow)" opacity="0.9"/>
+  <line x1="20" y1="46" x2="44" y2="46" stroke="#FFF7E0" stroke-width="1.2" stroke-linecap="round"/>
+</svg>
