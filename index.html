@@ -406,10 +406,34 @@
       </div>
 
       <div id="edit-view" class="hide">
-        <h2>Live Price Control</h2>
+        <h2>Live Menu &amp; Price Control</h2>
         <p class="lead" style="font-size:0.85rem; margin-bottom:14px;">Updates reflect on the customer menu immediately without a page reload.</p>
-        <div id="edit-list"></div>
-        <p class="err" id="save-msg" style="color:var(--gold); margin-top:10px; font-size:0.85rem;"></p>
+        
+        <div id="edit-list" style="max-height: 220px; overflow-y: auto; padding-right: 4px; margin-bottom: 12px;"></div>
+
+        <!-- Add New Menu Item -->
+        <div class="add-item-box" style="padding:14px; background:var(--bg-espresso); border:1px dashed var(--line); border-radius:8px; margin-bottom:12px;">
+          <div style="color:var(--gold); font-size:0.82rem; font-weight:700; text-transform:uppercase; margin-bottom:8px; display:flex; align-items:center; gap:6px;">
+            <span>➕ Add New Dish or Bottle</span>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:8px;">
+            <input id="new-name" placeholder="Item Name (e.g. Asun Platter, Don Julio 1942)" style="font-size:0.82rem;">
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+              <input id="new-price" type="number" min="0" step="500" placeholder="Price in ₦" style="font-size:0.82rem;">
+              <select id="new-cat" style="font-size:0.82rem; background:var(--bg-brown); color:var(--ivory); border:1px solid var(--line); border-radius:6px; padding:8px;">
+                <option value="food">Food</option>
+                <option value="drinks">Drinks</option>
+                <option value="cocktails">Cocktails</option>
+                <option value="specials">Specials</option>
+                <option value="vip">VIP Bottle &amp; Shisha</option>
+              </select>
+            </div>
+            <input id="new-desc" placeholder="Brief description (e.g. Served with spicy pepper dip)" style="font-size:0.82rem;">
+            <button class="btn gold sm" id="btn-add-item" type="button" style="justify-content:center; width:100%; margin-top:2px;">+ Add Item to Live Menu</button>
+          </div>
+        </div>
+
+        <p class="err" id="save-msg" style="color:var(--gold); margin-top:6px; font-size:0.85rem;"></p>
         <div class="mact">
           <button class="btn gold" id="save">Save &amp; Publish Live</button>
           <button class="btn" id="reset">Reset Defaults</button>

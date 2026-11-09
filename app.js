@@ -27,6 +27,11 @@ var imgBase=(window.ASA_IMG||function(n){return 'assets/'+n});
 
 function load(){
   try{
+    var raw=localStorage.getItem('asa_full_menu');
+    if(raw){
+      var parsed=JSON.parse(raw);
+      if(Array.isArray(parsed)&&parsed.length>0)return parsed;
+    }
     var s=JSON.parse(localStorage.getItem('asa_menu'));
     if(s)return DEFAULTS.map(function(d){var o=s[d.id]||{};return Object.assign({},d,{price:o.price||d.price,out:!!o.out})});
   }catch(e){}
@@ -37,6 +42,7 @@ var items=load(), cart={}, tab='all';
 
 function save(){
   try{
+    localStorage.setItem('asa_full_menu',JSON.stringify(items));
     var o={};
     items.forEach(function(i){o[i.id]={price:i.price,out:i.out}});
     localStorage.setItem('asa_menu',JSON.stringify(o));
@@ -54,14 +60,24 @@ function renderMenu(){
     }).join('');
   }
 
-  m.innerHTML=items.filter(function(i){
-    return tab==='all'||i.cats.indexOf(tab)>-1;
-  }).map(function(i){
+  var filtered=items.filter(function(i){
+    return tab==='all'||(i.cats&&i.cats.indexOf(tab)>-1);
+  });
+
+  if(!filtered.length){
+    m.innerHTML='<div style="grid-column:1/-1; text-align:center; padding:40px 20px; color:var(--taupe);">' +
+      '<p style="font-size:1.1rem; color:var(--ivory); margin-bottom:8px;">No offerings currently listed in this category.</p>' +
+      '<p style="font-size:0.85rem;">Check back shortly or explore our full selection.</p>' +
+    '</div>';
+    return;
+  }
+
+  m.innerHTML=filtered.map(function(i){
     return '<article class="item'+(i.out?' out':'')+'">' +
       '<div class="ph"><img loading="lazy" alt="'+i.name+'" src="'+imgBase(i.img)+'"></div>' +
       '<div class="bd">' +
         '<h3>'+i.name+'</h3>' +
-        '<p style="font-size:0.8rem; color:var(--taupe); line-height:1.4;">'+(i.desc||'')+'</p>' +
+        '<p style="font-size:0.8rem; color:var(--taupe); line-height:1.4;">'+(i.desc||'Signature preparation prepared fresh at ASA Bar & Kitchen.')+'</p>' +
         '<div class="row">' +
           '<span class="pr">'+naira(i.price)+'</span>' +
           (i.out ? '<span class="tag">Sold out today</span>' : '<button class="btn gold sm" data-add="'+i.id+'">Order Now &rarr;</button>') +
@@ -90,6 +106,19 @@ document.addEventListener('click',function(e){
   if(s){
     e.preventDefault();
     openStaff();
+  }
+
+  var del=e.target.closest('[data-del]');
+  if(del){
+    var did=del.dataset.del;
+    items=items.filter(function(i){return String(i.id)!==String(did)});
+    delete cart[did];
+    save();
+    renderMenu();
+    renderCart();
+    drawEditor();
+    var sm=$('#save-msg');
+    if(sm) sm.textContent='✓ Item deleted from live menu!';
   }
 });
 
@@ -160,8 +189,26 @@ function closeStaff(){
 function drawEditor(){
   var el=$('#edit-list');
   if(!el)return;
+  if(!items.length){
+    el.innerHTML='<p style="color:var(--taupe); font-size:0.85rem; padding:12px 0;">No items currently listed. Add a new dish or bottle below!</p>';
+    return;
+  }
   el.innerHTML=items.map(function(i){
-    return '<div class="srow"><div>'+i.name+'</div><input type="number" min="0" step="100" data-p="'+i.id+'" value="'+i.price+'"><label style="font-size:0.78rem; display:flex; align-items:center; gap:4px;"><input type="checkbox" data-o="'+i.id+'"'+(i.out?' checked':'')+'> Sold Out</label></div>';
+    var catLabel=(i.cats&&i.cats.length)?i.cats.join(', '):'food';
+    return '<div class="srow" style="display:flex; justify-content:space-between; align-items:center; gap:8px; padding:8px 0; border-bottom:1px solid var(--line-subtle);">' +
+      '<div style="flex:1; min-width:0;">' +
+        '<div style="font-weight:600; font-size:0.85rem; color:var(--ivory); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">'+i.name+'</div>' +
+        '<small style="color:var(--taupe); font-size:0.7rem; text-transform:uppercase;">'+catLabel+'</small>' +
+      '</div>' +
+      '<div style="display:flex; align-items:center; gap:6px;">' +
+        '<span style="color:var(--gold); font-size:0.8rem; font-weight:700;">₦</span>' +
+        '<input type="number" min="0" step="500" data-p="'+i.id+'" value="'+i.price+'" style="width:75px; text-align:right; font-size:0.8rem; padding:4px 6px;">' +
+        '<label style="font-size:0.72rem; display:flex; align-items:center; gap:3px; cursor:pointer; color:var(--taupe); white-space:nowrap;" title="Toggle 86 / Sold Out">' +
+          '<input type="checkbox" data-o="'+i.id+'"'+(i.out?' checked':'')+'> 86' +
+        '</label>' +
+        '<button type="button" class="del-item-btn" data-del="'+i.id+'" style="background:none; border:none; color:#f87171; font-size:1.2rem; cursor:pointer; padding:0 4px; line-height:1;" title="Remove Item">&times;</button>' +
+      '</div>' +
+    '</div>';
   }).join('');
 }
 
@@ -193,31 +240,85 @@ if(ov){
   if(sv){
     sv.onclick=function(){
       $$('[data-p]').forEach(function(inp){
-        var it=items.filter(function(i){return i.id==inp.dataset.p})[0], v=parseInt(inp.value,10);
-        if(v>=0&&it)it.price=v;
+        var it=items.filter(function(i){return String(i.id)===String(inp.dataset.p)})[0], v=parseInt(inp.value,10);
+        if(!isNaN(v)&&v>=0&&it)it.price=v;
       });
       $$('[data-o]').forEach(function(c){
-        var it=items.filter(function(i){return i.id==c.dataset.o})[0];
+        var it=items.filter(function(i){return String(i.id)===String(c.dataset.o)})[0];
         if(it) it.out=c.checked;
       });
       save();
       renderMenu();
       renderCart();
       var sm=$('#save-msg');
-      if(sm) sm.textContent='Published live to menu!';
+      if(sm) sm.textContent='✓ Prices & status saved live to menu!';
+    };
+  }
+
+  var btnAdd=$('#btn-add-item');
+  if(btnAdd){
+    btnAdd.onclick=function(){
+      var nameInp=$('#new-name'), priceInp=$('#new-price'), catSel=$('#new-cat'), descInp=$('#new-desc');
+      var name=nameInp?nameInp.value.trim():'';
+      var price=priceInp?parseInt(priceInp.value,10):0;
+      var cat=catSel?catSel.value:'food';
+      var desc=descInp?descInp.value.trim():'';
+      var sm=$('#save-msg');
+
+      if(!name){
+        if(sm) sm.textContent='Please enter a dish or drink name.';
+        if(nameInp) nameInp.focus();
+        return;
+      }
+      if(isNaN(price)||price<=0){
+        if(sm) sm.textContent='Please enter a valid price in Naira.';
+        if(priceInp) priceInp.focus();
+        return;
+      }
+
+      var defaultImg='signature_jollof_dish.jpg';
+      if(cat==='cocktails'||cat==='drinks') defaultImg='craft_cocktails.jpg';
+      else if(cat==='vip') defaultImg='craft_cocktails.jpg';
+      else if(cat==='specials') defaultImg='menu_grilled_fish.jpg';
+
+      var newItem={
+        id: Date.now(),
+        name: name,
+        price: price,
+        cats: [cat],
+        img: defaultImg,
+        desc: desc || 'Signature preparation prepared fresh at ASA Bar & Kitchen.',
+        out: false
+      };
+
+      items.push(newItem);
+      save();
+      renderMenu();
+      renderCart();
+      drawEditor();
+
+      if(nameInp) nameInp.value='';
+      if(priceInp) priceInp.value='';
+      if(descInp) descInp.value='';
+      if(sm) sm.textContent='✓ "'+name+'" added and live on menu!';
     };
   }
 
   var rs=$('#reset');
   if(rs){
     rs.onclick=function(){
-      items=DEFAULTS.map(function(d){return Object.assign({},d,{out:false})});
-      save();
-      drawEditor();
-      renderMenu();
-      renderCart();
-      var sm=$('#save-msg');
-      if(sm) sm.textContent='Factory prices restored.';
+      if(confirm('Restore all default dishes and prices?')){
+        localStorage.removeItem('asa_full_menu');
+        localStorage.removeItem('asa_menu');
+        items=DEFAULTS.map(function(d){return Object.assign({},d,{out:false})});
+        cart={};
+        save();
+        drawEditor();
+        renderMenu();
+        renderCart();
+        var sm=$('#save-msg');
+        if(sm) sm.textContent='Default menu restored.';
+      }
     };
   }
 }
