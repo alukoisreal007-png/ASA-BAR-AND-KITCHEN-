@@ -1023,6 +1023,54 @@ footer {
   display: none !important;
 }
 
+/* Staff Modal Input Visibility & High-Contrast Typography */
+.add-item-box {
+  background: #140E0A !important;
+  border: 1px solid var(--gold) !important;
+  border-radius: 10px;
+  padding: 16px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+}
+
+.add-item-box input,
+.add-item-box select,
+.modal input[type="text"],
+.modal input[type="number"],
+.modal input[type="password"] {
+  background: #080706 !important;
+  color: #FFFFFF !important;
+  border: 1px solid rgba(198, 154, 80, 0.45) !important;
+  border-radius: 6px;
+  padding: 10px 12px !important;
+  font-size: 0.95rem !important;
+  font-weight: 600 !important;
+  outline: none;
+  font-family: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.add-item-box input::placeholder,
+.modal input::placeholder {
+  color: #8C7E6D !important;
+  font-weight: 400 !important;
+}
+
+.add-item-box input:focus,
+.add-item-box select:focus,
+.modal input:focus {
+  border-color: var(--gold) !important;
+  box-shadow: 0 0 0 2px rgba(198, 154, 80, 0.35) !important;
+  color: #FFFFFF !important;
+}
+
+.srow input[type="number"] {
+  background: #080706 !important;
+  color: var(--gold) !important;
+  border: 1px solid rgba(198, 154, 80, 0.45) !important;
+  font-weight: 700 !important;
+  font-size: 0.92rem !important;
+}
+
 /* ========================================================
    MOBILE & TABLET RESPONSIVE PERFECTION
    ======================================================== */
