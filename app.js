@@ -150,10 +150,21 @@ function renderCart(){
   if(b){
     b.textContent=k.n+' Item'+(k.n>1?'s':'')+' • '+naira(k.tot)+' — Order via WhatsApp';
     var orderLines = k.lines.map(function(l){
-      return l.q+' x '+l.i.name+' ('+naira(l.q*l.i.price)+')';
-    }).join('\n');
-    var msg = '*PRE-ORDER — ASA BAR & KITCHEN*\n\n' + orderLines + '\n\n*Total Amount:* ' + naira(k.tot) + '\n\n_Please confirm availability and preparation time._';
-    b.href=wa(msg);
+      return '• ' + l.q + 'x ' + l.i.name + ' (' + naira(l.q*l.i.price) + ')';
+    });
+    var lines = [
+      '━━━━━━━━━━━━━━━━━━━━',
+      '🍽️ *ASA BAR & KITCHEN • DIRECT ORDER*',
+      '━━━━━━━━━━━━━━━━━━━━',
+      ''
+    ].concat(orderLines).concat([
+      '',
+      '💰 *Total Bill:* ' + naira(k.tot),
+      '',
+      '━━━━━━━━━━━━━━━━━━━━',
+      '_Please confirm table number or delivery address._'
+    ]);
+    b.href=wa(lines.join('\n'));
   }
 }
 

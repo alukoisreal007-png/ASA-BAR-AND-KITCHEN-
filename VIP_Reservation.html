@@ -314,20 +314,31 @@
       const occ = occSelect.options[occSelect.selectedIndex].text;
       const notes = document.getElementById("guestNotes").value.trim();
 
-      let msg = "*VIP TABLE RESERVATION MANIFEST — ASA KITCHEN*\\n\\n" +
-        "*Guest Name:* " + name + "\\n" +
-        "*WhatsApp Contact:* " + phone + "\\n" +
-        "*Schedule:* " + date + " @ " + time + "\\n" +
-        "*Zone Requested:* " + activeZone + "\\n" +
-        "*Party Size:* " + size + "\\n" +
-        "*Occasion:* " + occ + "\\n";
+      const lines = [
+        "━━━━━━━━━━━━━━━━━━━━",
+        "✨ *ASA BAR & KITCHEN • VIP RESERVATION* ✨",
+        "━━━━━━━━━━━━━━━━━━━━",
+        "",
+        "👤 *Guest Name:* " + name,
+        "📞 *WhatsApp:* " + phone,
+        "",
+        "📍 *Zone Reserved:* " + activeZone,
+        "📅 *Date:* " + date,
+        "⏰ *Time:* " + time,
+        "👥 *Party Size:* " + size,
+        "🎉 *Occasion:* " + occ
+      ];
 
       if (notes) {
-        msg += "*Special Requests:* " + notes + "\\n";
+        lines.push("");
+        lines.push("💬 *Special Requests:* " + notes);
       }
 
-      msg += "\\n_Please confirm availability and assign table number._";
+      lines.push("");
+      lines.push("━━━━━━━━━━━━━━━━━━━━");
+      lines.push("_Please confirm availability and assign table number._");
 
+      const msg = lines.join("\n");
       const url = "https://wa.me/2348029743214?text=" + encodeURIComponent(msg);
       window.open(url, "_blank");
     }
